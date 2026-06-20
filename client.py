@@ -1,0 +1,17 @@
+import requests
+from tabulate import tabulate
+op=requests.get("http://127.0.0.1:8000/")
+health=requests.get("http://127.0.0.1:8000/health").json()
+status=requests.get("http://127.0.0.1:8000/status")
+top=requests.get("http://127.0.0.1:8000/processes").json()
+info=requests.get("http://127.0.0.1:8000/info").json()
+print("=== Server Status ===")
+print(op.text)
+print("=== System Status ===")
+print(tabulate(info.items(),headers=["Property","value"],tablefmt="grid"))
+print("=== Health ===")
+print(tabulate(health.items(),headers=["Property","value"],tablefmt="grid"))
+print("=== Top 10 Processes (sorted by CPU) ===")
+print(tabulate(top,headers="keys",tablefmt="grid"))
+print("=== Info ===")
+print(tabulate(info.items(),headers=["Property","value"],tablefmt="grid"))
